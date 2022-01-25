@@ -1,6 +1,12 @@
+import { IsString } from 'class-validator';
+
 export class CreateTestDto {
+  id?: string;
+
+  @IsString()
   name: string;
+
   questions: any[];
-  type: string;
+
   results: { total: number; items: any[] };
 }

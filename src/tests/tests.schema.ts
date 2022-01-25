@@ -8,13 +8,23 @@ class results {
   items: any[];
 }
 
-@Schema()
+@Schema({
+  versionKey: false,
+  toJSON: {
+    transform: (doc, ret) => {
+      delete ret._id;
+    },
+  },
+})
 export class Test {
-  @Prop()
-  name: string;
+  @Prop({ type: String, unique: true, index: true })
+  id: string;
 
   @Prop()
-  type: string;
+  userId: number;
+
+  @Prop()
+  name: string;
 
   @Prop()
   questions: any[];
