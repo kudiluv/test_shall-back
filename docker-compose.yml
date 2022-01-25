@@ -4,6 +4,7 @@ services:
       image: node:17-bullseye-slim
       volumes:
         - ./:/app
+        - /etc/letsencrypt/live:/etc/letsencrypt/live
       ports:
         - "3000:3000"
       working_dir: /app

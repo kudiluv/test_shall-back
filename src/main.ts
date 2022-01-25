@@ -2,10 +2,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as fs from 'fs';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000;
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const httpsOptions = {
+    key: fs.readFileSync('/etc/letsencrypt/live/easyquiz.space/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/easyquiz.space/fullchain.pem'),
+  };
+  const app = await NestFactory.create(AppModule, { cors: true, httpsOptions });
   app.useGlobalPipes(new ValidationPipe());
   const httpAdapter: any = app.getHttpAdapter();
   httpAdapter.set('etag', false);
