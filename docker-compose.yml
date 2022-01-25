@@ -13,7 +13,7 @@ services:
         apt-get install -y procps &&
         npm install -g nest &&
         npm install &&
-        sudp npm run start:dev
+        sudo npm run start:dev
         "
       depends_on:
         - mysql
