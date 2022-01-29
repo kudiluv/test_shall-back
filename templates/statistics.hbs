@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .container {
+    max-width: 1240px;
+    padding: 20px;
+    margin: auto;
+  }
+  .header {
+    text-align: center;
+  }
+</style>
+<body>
+  <div class="container">
+    <h1 class="header">Тест: {{name}}</h1>
+    <h3>Общее количество прохождений теста: {{countAll}}</h3>
+    <div>
+      <canvas id="myChart"></canvas>
+      <canvas id="byResults"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      labels: {{{json countLastSeven}}}.map(item => item.createdAt),
+      datasets: [{
+        label: 'Статистика за последние 7 дней',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: {{{json countLastSeven}}}.map(item => item.count),
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {}
+    };
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+  </script>
+  <script>
+    const dataBar = {
+      labels: {{{json resultsStatistic}}}.map((item, i) => i+1),
+      datasets: [{
+        label: 'Статистика по определенным результатам',
+        data: {{{json resultsStatistic}}}.map((item, i) => item.count),
+        borderWidth: 1
+      }]
+    };
+    const configBarChart = {
+      type: 'bar',
+      data: dataBar,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    };
+
+    const barChart = new Chart(
+      document.getElementById('byResults'),
+      configBarChart
+    );
+  </script>
+</body>
+</html>

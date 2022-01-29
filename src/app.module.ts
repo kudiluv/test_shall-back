@@ -10,6 +10,9 @@ import { UsersModule } from './users/users.module';
 import { ImagesModule } from './images/images.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ResultsModule } from './results/results.module';
+import { ViewsModule } from './views/views.module';
+import { FormaterModule } from './formater/formater.module';
 
 @Module({
   imports: [
@@ -31,6 +34,9 @@ import { join } from 'path';
     AuthModule,
     TestsModule,
     ImagesModule,
+    ResultsModule,
+    ViewsModule,
+    FormaterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

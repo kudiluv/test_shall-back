@@ -12,5 +12,6 @@ import { AuthModule } from 'src/auth/auth.module';
   ],
   providers: [TestsService],
   controllers: [TestsController],
+  exports: [TestsService],
 })
 export class TestsModule {}

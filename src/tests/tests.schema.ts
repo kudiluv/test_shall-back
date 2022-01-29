@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { DescriptionType } from './description/DescriptionType';
 
 export type TestDocument = Test & Document;
 
-class results {
-  total: number;
-  items: any[];
+class Results {
+  ranges: number[];
+  items: { id: string; description: DescriptionType[] }[];
 }
 
 @Schema({
@@ -30,7 +31,7 @@ export class Test {
   questions: any[];
 
   @Prop()
-  results: results;
+  results: Results;
 }
 
 export const TestSchema = SchemaFactory.createForClass(Test);

@@ -1,51 +1,30 @@
 version: "3.3"
 services:
   api:
-      image: node:17-bullseye-slim
-      volumes:
-        - ./:/app
-        - /etc/letsencrypt:/etc/letsencrypt
-      ports:
-        - "3000:3000"
-      working_dir: /app
-      command: sh -c 
-        "apt-get update &&
-        apt-get install -y procps &&
-        npm install -g nest &&
-        npm install &&
-        npm run start:dev
-        "
-      depends_on:
-        - mysql
-  mysql:
-    image: mysql:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=example
-    ports:
-      - "3306:3306"
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - mysqldata:/var/lib/mysql
-    entrypoint: "bash -c 'echo -e \"CREATE DATABASE IF NOT EXISTS app_test;\" > /docker-entrypoint-initdb.d/create_app_test_db.sql &&
-                          /entrypoint.sh mysqld'"
-  mongo:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: test_shell
+      - ./:/app
     ports:
-      - "27018:27017"
-  # nginx:
-  #   image: nginx:stable-alpine
-  #   ports:
-  #     - "80:80"
-  #   links:
-  #     - api
-  #   depends_on:
-  #     - api
-  #   volumes:
-  #     - ./nginx:/etc/nginx/conf.d/
-  #     - ./images:/sites/images
+      - "3000:3000"
+    working_dir: /app
+    command: sh -c 
+      "npm install &&
+       npm run start:dev"
+    depends_on:
+      - mysql
+
+  mysql:
+    extends:
+      file: docker-compose-base.yml
+      service: mysql
+
+  mongo:
+    extends:
+      file: docker-compose-base.yml
+      service: mongo
+
 volumes:
   mysqldata:
     driver: local

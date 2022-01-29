@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    entrypoint: "bash -c 'echo -e \"CREATE DATABASE IF NOT EXISTS app_test;\" > /docker-entrypoint-initdb.d/create_app_test_db.sql &&
+                          /entrypoint.sh mysqld'"
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: test_shell
+    ports:
+      - "27018:27017"
+
+volumes:
+  mysqldata:
+    driver: local
