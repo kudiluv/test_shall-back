@@ -80,10 +80,10 @@ export class ResultsService {
         },
       },
     ]);
-    return this.filleEmptyValues(dateNow, data);
+    return this.fillEmptyValues(dateNow, data);
   }
 
-  private filleEmptyValues(dateNow: number, data: CountLastSeven[]) {
+  private fillEmptyValues(dateNow: number, data: CountLastSeven[]) {
     for (let i = 0; i < 7; i++) {
       const date = new Date(dateNow - i * 24 * 60 * 60 * 1000);
       const checkedDate = date.toISOString().slice(0, 10);

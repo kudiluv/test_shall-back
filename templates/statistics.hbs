@@ -18,6 +18,18 @@
   .header {
     text-align: center;
   }
+  .descriptionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .descriptionImage {
+    max-width: 50%;
+    object-fit: contain;
+  }
+  .descriptionText {
+    width: 50%;
+  }
 </style>
 <body>
   <div class="container">
@@ -26,6 +38,20 @@
     <div>
       <canvas id="myChart"></canvas>
       <canvas id="byResults"></canvas>
+    </div>
+    <div class="descriptionContainer">
+      <h3>Описание результатов</h3>
+      {{#each resultDescriptions}}
+        {{#each description}}
+          {{#ifCond type 0}}
+            <h4 class="descriptionText">Результат №{{inc @index}}</h4>
+            <img src="/{{value.source}}" class="descriptionImage"/>
+          {{/ifCond}}
+          {{#ifCond type 1}}
+          <div class="descriptionText">{{value}}</div>
+          {{/ifCond}}
+        {{/each}}
+      {{/each}}
     </div>
   </div>
 
@@ -75,6 +101,7 @@
       document.getElementById('byResults'),
       configBarChart
     );
+    const resultsStatistic = {{{json resultDescriptions}}}
   </script>
 </body>
 </html>

@@ -10,6 +10,15 @@ export class ViewsService {
     this.handlebars.registerHelper('json', function (context) {
       return JSON.stringify(context);
     });
+    this.handlebars.registerHelper('ifCond', function (v1, v2, options) {
+      if (v1 == v2) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
+    this.handlebars.registerHelper('inc', function (value, options) {
+      return parseInt(value) + 1;
+    });
   }
 
   getHTML(templateName: string, data: any) {
