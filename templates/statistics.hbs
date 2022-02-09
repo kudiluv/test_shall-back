@@ -42,8 +42,8 @@
     <div class="descriptionContainer">
       <h3>Описание результатов</h3>
       {{#each resultDescriptions}}
+        <h4 class="descriptionText">Результат №{{inc @index}}</h4>
         {{#each description}}
-          <h4 class="descriptionText">Результат №{{inc @index}}</h4>
           {{#ifCond type 0}}
             <img src="/{{value.source}}" class="descriptionImage"/>
           {{/ifCond}}
