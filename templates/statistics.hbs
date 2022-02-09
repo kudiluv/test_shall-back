@@ -43,8 +43,8 @@
       <h3>Описание результатов</h3>
       {{#each resultDescriptions}}
         {{#each description}}
+          <h4 class="descriptionText">Результат №{{inc @index}}</h4>
           {{#ifCond type 0}}
-            <h4 class="descriptionText">Результат №{{inc @index}}</h4>
             <img src="/{{value.source}}" class="descriptionImage"/>
           {{/ifCond}}
           {{#ifCond type 1}}
